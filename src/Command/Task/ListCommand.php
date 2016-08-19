@@ -40,12 +40,14 @@ class ListCommand extends AbstractCommand
                 'ID',
             ]);
             foreach ($tasks as $index => $task) {
+                $isTaskCompleted = 'completed' === $task->getStatus();
                 $updatedAt = new \DateTime($task->getUpdated());
+                $isUpdatedThisYear = date('Y') === $updatedAt->format('Y');
                 $table->addRow([
                     $index + 1,
                     $task->getTitle(),
-                    'completed' === $task->getStatus() ? '[x]' : '[ ]',
-                    $updatedAt->format('M d, Y \a\t H:i:s'),
+                    $isTaskCompleted ? '[x]' : '[ ]',
+                    $updatedAt->format($isUpdatedThisYear ? 'D, M d, H:i' : 'D, M d Y, H:i'),
                     $task->getId(),
                 ]);
             }
