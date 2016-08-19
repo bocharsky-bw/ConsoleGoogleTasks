@@ -31,7 +31,7 @@ abstract class AbstractCommand extends Command
     {
         $client = $this->getGoogleClient();
 
-        $credentialsPath = $this->expandHomeDirectory('~/.GoogleConsoleTasks/credentials.json');
+        $credentialsPath = $this->expandHomeDirectory('~/.ConsoleGoogleTasks/credentials.json');
         if (file_exists($credentialsPath)) {
             // Get stored locally access token
             $accessToken = $this->readAccessToken($credentialsPath);

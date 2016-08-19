@@ -12,7 +12,7 @@ class ListCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setName('app:task-list:list')
+            ->setName('list:list')
             ->setDescription('List task lists')
             ->setHelp("This command lists user task lists")
         ;
@@ -20,8 +20,8 @@ class ListCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $service = $this->getTasksGoogleService();
         $this->authenticateGoogleClient($input, $output);
+        $service = $this->getTasksGoogleService();
 
         $results = $service->tasklists->listTasklists();
         /** @var \Google_Service_Tasks_TaskList[] $taskLists */
@@ -30,17 +30,17 @@ class ListCommand extends AbstractCommand
             $table = new Table($output);
             $table->setHeaders([
                 '#',
-                'ID',
                 'Title',
                 'Updated at',
+                'ID',
             ]);
             foreach ($taskLists as $index => $taskList) {
                 $updatedAt = new \DateTime($taskList->getUpdated());
                 $table->addRow([
                     $index + 1,
-                    $taskList->getId(),
                     $taskList->getTitle(),
                     $updatedAt->format('M d, Y \a\t H:i:s'),
+                    $taskList->getId(),
                 ]);
             }
             $table->render();
