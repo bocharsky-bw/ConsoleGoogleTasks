@@ -23,9 +23,9 @@ class ListCommand extends AbstractCommand
         $this->authenticateGoogleClient($input, $output);
         $service = $this->getTasksGoogleService();
 
-        $results = $service->tasklists->listTasklists();
+        $result = $service->tasklists->listTasklists();
         /** @var \Google_Service_Tasks_TaskList[] $taskLists */
-        $taskLists = $results->getItems();
+        $taskLists = $result->getItems();
         if (count($taskLists)) {
             $table = new Table($output);
             $table->setHeaders([
