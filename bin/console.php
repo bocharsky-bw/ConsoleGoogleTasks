@@ -19,6 +19,7 @@ $container['google_client'] = function () {
     $client->setAccessType('offline');
     $client->setAuthConfigFile(__DIR__.'/../client_secret.json');
     $client->setScopes([
+        \Google_Service_Tasks::TASKS,
         \Google_Service_Tasks::TASKS_READONLY,
     ]);
 
@@ -35,6 +36,7 @@ $app->setContainer($container);
 $app->addCommands([
     new \AlVi\Command\App\ConfigureCommand(),
     new \AlVi\Command\Task\ListCommand(),
+    new \AlVi\Command\TaskList\CreateCommand(),
     new \AlVi\Command\TaskList\ListCommand(),
 ]);
 
