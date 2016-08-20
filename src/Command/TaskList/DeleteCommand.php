@@ -26,9 +26,9 @@ class DeleteCommand extends AbstractCommand
         $taskList = $this->resolveTaskList($input, $output);
 
         $service = $this->getTasksGoogleService();
-        $recourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'delete', array(
-            "methods" => array(
-                "delete" => array(
+        $recourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'delete', [
+            "methods" => [
+                "delete" => [
                     "parameters" => [
                         'tasklist' => [
                             'required' => true,
@@ -38,9 +38,9 @@ class DeleteCommand extends AbstractCommand
                     ],
                     "path" => "users/@me/lists/{tasklist}",
                     "httpMethod" => "DELETE",
-                )
-            )
-        ));
+                ],
+            ],
+        ]);
 
         $recourseService->delete($taskList->getId());
 
