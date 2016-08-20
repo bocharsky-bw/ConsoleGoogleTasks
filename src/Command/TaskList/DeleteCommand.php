@@ -49,21 +49,12 @@ class DeleteCommand extends AbstractCommand
         $output->writeln(sprintf('Task list is deleted (%s)', $id));
     }
 
-    private function resolveTaskListId(InputInterface $input, OutputInterface $output)
+    protected function resolveTaskListId(InputInterface $input, OutputInterface $output)
     {
         if ($id = $input->getArgument('id')) {
             return $id;
         }
 
-        // @TODO Replace with selected list
-        $question = new Question('Enter task list ID: ');
-        /** @var QuestionHelper $helper */
-        $helper = $this->getHelper('question');
-        do {
-            $id = $helper->ask($input, $output, $question);
-            $id = trim($id);
-        } while (empty($id));
-
-        return $id;
+        return parent::resolveTaskListId($input, $output);
     }
 }

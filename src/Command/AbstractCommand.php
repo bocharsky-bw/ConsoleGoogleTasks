@@ -7,6 +7,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
 abstract class AbstractCommand extends Command
@@ -46,6 +47,39 @@ abstract class AbstractCommand extends Command
         $client->setAccessToken($accessToken);
         // Refresh the token if it's expired.
         $this->refreshAccessTokenIfExpired($credentialsPath);
+    }
+
+    /**
+     * @TODO Rename this method to... maybe... "choose"
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return string
+     */
+    protected function resolveTaskListId(InputInterface $input, OutputInterface $output)
+    {
+        $service = $this->getTasksGoogleService();
+        $result = $service->tasklists->listTasklists();
+        $taskLists = [];
+        $taskListTitles = array_map(function (\Google_Service_Tasks_TaskList $taskList) use (&$taskLists) {
+            $key = sprintf('%s (%s)', $taskList->getTitle(), $taskList->getId());
+            $taskLists[$key] = $taskList;
+
+            return $key;
+        }, $result->getItems());
+
+        $helper = $this->getHelper('question');
+        $question = new ChoiceQuestion(
+            'Choose task list:',
+            $taskListTitles,
+            0
+        );
+        $chosenKey = $helper->ask($input, $output, $question);
+        /** @var \Google_Service_Tasks_TaskList $taskList */
+        $taskList = $taskLists[$chosenKey];
+
+        return $taskList->getId();
     }
 
     protected function getContainer()
