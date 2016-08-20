@@ -40,6 +40,7 @@ $app->addCommands([
     new \AlVi\Command\TaskList\DeleteCommand(),
     new \AlVi\Command\TaskList\ListCommand(),
     new \AlVi\Command\TaskList\RenameCommand(),
+    new \AlVi\Command\TaskList\ShowCommand(),
 ]);
 
 $app->run();
