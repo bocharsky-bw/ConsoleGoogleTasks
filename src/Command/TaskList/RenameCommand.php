@@ -31,7 +31,7 @@ class RenameCommand extends AbstractCommand
         $taskList->setTitle($newTitle);
 
         $service = $this->getTasksGoogleService();
-        $recourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'patch', array(
+        $recourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'patch', [
             "methods" => [
                 "patch" => [
                     "parameters" => [
@@ -45,7 +45,7 @@ class RenameCommand extends AbstractCommand
                     "httpMethod" => "PATCH",
                 ],
             ],
-        ));
+        ]);
         $taskList = $recourseService->patch($taskList->getId(), $taskList);
 
         $output->writeln(sprintf('Task list "%s" is renamed to "%s"', $previousTitle, $taskList->getTitle(), $taskList->getId()));

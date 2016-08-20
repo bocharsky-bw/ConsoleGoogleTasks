@@ -27,15 +27,15 @@ class CreateCommand extends AbstractCommand
         $title = $this->resolveTaskListTitle($input, $output);
 
         $service = $this->getTasksGoogleService();
-        $recourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'insert', array(
-            "methods" => array(
-                "insert" => array(
+        $recourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'insert', [
+            "methods" => [
+                "insert" => [
                     "parameters" => [],
                     "path" => "users/@me/lists",
                     "httpMethod" => "POST",
-                )
-            )
-        ));
+                ],
+            ],
+        ]);
 
         $taskList = new \Google_Service_Tasks_TaskList();
         $taskList->setTitle($title);

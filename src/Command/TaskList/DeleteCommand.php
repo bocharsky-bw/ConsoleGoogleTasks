@@ -42,6 +42,7 @@ class DeleteCommand extends AbstractCommand
             ],
         ]);
 
+        // @TODO Add confirmation before actual deleting
         $recourseService->delete($taskList->getId());
 
         $output->writeln(sprintf('Task list "%s" is deleted (%s)', $taskList->getTitle(), $taskList->getId()));
