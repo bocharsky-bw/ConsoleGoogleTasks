@@ -137,9 +137,19 @@ abstract class AbstractCommand extends Command
     private function refreshAccessTokenIfExpired($credentialsPath)
     {
         $client = $this->getGoogleClient();
+        $refreshTokenPath = __DIR__.'/../../var/cache/refresh_token';
+
+        $refreshToken = $client->getRefreshToken();
+        if ($refreshToken) {
+            // Store refresh token in file due to impossible to use $_SESSION in CLI
+            file_put_contents($refreshTokenPath, $refreshToken);
+        } else {
+            // Restore refresh token from file
+            $refreshToken = file_get_contents($refreshTokenPath);
+        }
 
         if ($client->isAccessTokenExpired()) {
-            $client->refreshToken($client->getRefreshToken());
+            $client->fetchAccessTokenWithRefreshToken($refreshToken);
             file_put_contents($credentialsPath, json_encode($client->getAccessToken()));
         }
     }

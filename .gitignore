@@ -1,1 +1,5 @@
+/var/*
+!var/cache
+/var/cache/*
+!var/cache/.gitkeep
 /vendor/
