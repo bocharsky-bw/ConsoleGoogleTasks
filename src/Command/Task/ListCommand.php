@@ -25,9 +25,9 @@ class ListCommand extends AbstractCommand
     {
         $this->authenticateGoogleClient($input, $output);
         $service = $this->getTasksGoogleService();
-        $taskList = $this->resolveTaskListId($input, $output);
+        $taskList = $this->resolveTaskList($input, $output);
 
-        $result = $service->tasks->listTasks($taskList);
+        $result = $service->tasks->listTasks($taskList->getId());
         /** @var \Google_Service_Tasks_Task[] $tasks */
         $tasks = $result->getItems();
         if (count($tasks)) {
@@ -53,16 +53,18 @@ class ListCommand extends AbstractCommand
             }
             $table->render();
         } else {
-            $output->writeln('No tasks found.');
+            $output->writeln('No tasks found');
         }
     }
 
-    protected function resolveTaskListId(InputInterface $input, OutputInterface $output)
+    private function resolveTaskList(InputInterface $input, OutputInterface $output)
     {
         if ($taskListId = $input->getArgument('task-list')) {
+            // @TODO Query TaskList object
+            throw new \Exception('Pending...');
             return $taskListId;
         }
 
-        return parent::resolveTaskListId($input, $output);
+        return $this->chooseTaskList($input, $output);
     }
 }

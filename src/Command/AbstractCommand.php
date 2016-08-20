@@ -50,25 +50,28 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * @TODO Rename this method to... maybe... "choose"
-     *
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return string
+     * @return \Google_Service_Tasks_TaskList
      */
-    protected function resolveTaskListId(InputInterface $input, OutputInterface $output)
+    protected function chooseTaskList(InputInterface $input, OutputInterface $output)
     {
         $service = $this->getTasksGoogleService();
         $result = $service->tasklists->listTasklists();
-        $taskLists = [];
-        $taskListTitles = array_map(function (\Google_Service_Tasks_TaskList $taskList) use (&$taskLists) {
+        /** @var \Google_Service_Tasks_TaskList[] $taskLists */
+        $taskLists = $result->getItems();
+
+        // Prepare task lists to be output in the list of answers
+        $taskListMapping = [];
+        $taskListTitles = array_map(function (\Google_Service_Tasks_TaskList $taskList, $index) use (&$taskListMapping) {
             $key = sprintf('%s (%s)', $taskList->getTitle(), $taskList->getId());
-            $taskLists[$key] = $taskList;
+            $taskListMapping[$key] = $index;
 
             return $key;
-        }, $result->getItems());
+        }, $taskLists, array_keys($taskLists));
 
+        // Ask user to choose a task list
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Choose task list:',
@@ -76,10 +79,10 @@ abstract class AbstractCommand extends Command
             0
         );
         $chosenKey = $helper->ask($input, $output, $question);
-        /** @var \Google_Service_Tasks_TaskList $taskList */
-        $taskList = $taskLists[$chosenKey];
+        $index = $taskListMapping[$chosenKey];
+        $taskList = $taskLists[$index];
 
-        return $taskList->getId();
+        return $taskList;
     }
 
     protected function getContainer()

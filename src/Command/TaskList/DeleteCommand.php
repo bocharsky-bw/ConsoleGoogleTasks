@@ -3,11 +3,9 @@
 namespace AlVi\Command\TaskList;
 
 use AlVi\Command\AbstractCommand;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 
 class DeleteCommand extends AbstractCommand
 {
@@ -25,7 +23,7 @@ class DeleteCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->authenticateGoogleClient($input, $output);
-        $id = $this->resolveTaskListId($input, $output);
+        $taskList = $this->resolveTaskList($input, $output);
 
         $service = $this->getTasksGoogleService();
         $recourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'delete', array(
@@ -44,17 +42,19 @@ class DeleteCommand extends AbstractCommand
             )
         ));
 
-        $recourseService->delete($id);
+        $recourseService->delete($taskList->getId());
 
-        $output->writeln(sprintf('Task list is deleted (%s)', $id));
+        $output->writeln(sprintf('Task list "%s" is deleted (%s)', $taskList->getTitle(), $taskList->getId()));
     }
 
-    protected function resolveTaskListId(InputInterface $input, OutputInterface $output)
+    private function resolveTaskList(InputInterface $input, OutputInterface $output)
     {
         if ($id = $input->getArgument('id')) {
+            // @TODO Query TaskList object
+            throw new \Exception('Pending...');
             return $id;
         }
 
-        return parent::resolveTaskListId($input, $output);
+        return $this->chooseTaskList($input, $output);
     }
 }

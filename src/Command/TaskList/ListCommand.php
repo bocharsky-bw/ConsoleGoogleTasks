@@ -45,7 +45,7 @@ class ListCommand extends AbstractCommand
             }
             $table->render();
         } else {
-            $output->writeln('No task lists found.');
+            $output->writeln('No task lists found');
         }
     }
 }
