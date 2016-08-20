@@ -85,6 +85,36 @@ abstract class AbstractCommand extends Command
         return $taskList;
     }
 
+    protected function chooseTask(\Google_Service_Tasks_TaskList $taskList, InputInterface $input, OutputInterface $output)
+    {
+        $service = $this->getTasksGoogleService();
+        $result = $service->tasks->listTasks($taskList->getId());
+        /** @var \Google_Service_Tasks_Task[] $tasks */
+        $tasks = $result->getItems();
+
+        // Prepare tasks to be output in the list of answers
+        $taskMapping = [];
+        $stringTasks = array_map(function (\Google_Service_Tasks_Task $task, $index) use (&$taskMapping) {
+            $key = sprintf('%s (%s)', $task->getTitle(), $task->getId());
+            $taskMapping[$key] = $index;
+
+            return $key;
+        }, $tasks, array_keys($tasks));
+
+        // Ask user to choose a task
+        $helper = $this->getHelper('question');
+        $question = new ChoiceQuestion(
+            'Choose task:',
+            $stringTasks,
+            0
+        );
+        $chosenKey = $helper->ask($input, $output, $question);
+        $index = $taskMapping[$chosenKey];
+        $task = $tasks[$index];
+
+        return $task;
+    }
+
     protected function getContainer()
     {
         return $this->getApplication()->getContainer();
