@@ -35,6 +35,7 @@ $app->setContainer($container);
 // Register commands
 $app->addCommands([
     new \AlVi\Command\App\ConfigureCommand(),
+    new \AlVi\Command\Task\CreateCommand(),
     new \AlVi\Command\Task\ListCommand(),
     new \AlVi\Command\Task\ShowCommand(),
     new \AlVi\Command\TaskList\CreateCommand(),
