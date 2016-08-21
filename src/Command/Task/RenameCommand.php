@@ -9,15 +9,16 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class CreateCommand extends AbstractCommand
+class RenameCommand extends AbstractCommand
 {
     protected function configure()
     {
         $this
-            ->setName('task:create')
-            ->setDescription('Create task')
-            ->setHelp("This command creates user task")
-            ->addArgument('title', InputArgument::OPTIONAL, 'Task list title')
+            ->setName('task:rename')
+            ->setDescription('Rename task')
+            ->setHelp("This command renames user task")
+            ->addArgument('title', InputArgument::OPTIONAL, 'New task title')
+            ->addArgument('task', InputArgument::OPTIONAL, 'Task ID')
             ->addArgument('task-list', InputArgument::OPTIONAL, 'Task list ID')
         ;
     }
@@ -26,30 +27,35 @@ class CreateCommand extends AbstractCommand
     {
         $this->authenticateGoogleClient($input, $output);
         $taskList = $this->resolveTaskList($input, $output);
-        $title = $this->resolveTaskTitle($input, $output);
+        $task = $this->resolveTask($taskList, $input, $output);
+        $previousTitle = $task->getTitle();
+        $newTitle = $this->resolveNewTaskTitle($input, $output);
+        $task->setTitle($newTitle);
 
         $service = $this->getTasksGoogleService();
-        $recourseService = new \Google_Service_Tasks_Resource_Tasks($service, 'tasks', 'insert', [
+        $taskRecourseService = new \Google_Service_Tasks_Resource_Tasks($service, 'tasks', 'patch', [
             "methods" => [
-                "insert" => [
+                "patch" => [
                     "parameters" => [
                         'tasklist' => [
                             'required' => true,
                             'type' => 'string',
                             'location' => 'path',
                         ],
+                        'task' => [
+                            'required' => true,
+                            'type' => 'string',
+                            'location' => 'path',
+                        ],
                     ],
-                    "path" => "lists/{tasklist}/tasks",
-                    "httpMethod" => "POST",
+                    "path" => "lists/{tasklist}/tasks/{task}",
+                    "httpMethod" => "PATCH",
                 ],
             ],
         ]);
+        $task = $taskRecourseService->patch($taskList->getId(), $task->getId(), $task);
 
-        $task = new \Google_Service_Tasks_Task();
-        $task->setTitle($title);
-        $task = $recourseService->insert($taskList->getId(), $task);
-
-        $output->writeln(sprintf('Task "%s" is created (%s)', $task->getTitle(), $task->getId()));
+        $output->writeln(sprintf('Task "%s" is renamed to "%s"', $previousTitle, $task->getTitle(), $task->getId()));
     }
 
     private function resolveTaskList(InputInterface $input, OutputInterface $output)
@@ -74,13 +80,13 @@ class CreateCommand extends AbstractCommand
         return $this->chooseTask($taskList, $input, $output);
     }
 
-    private function resolveTaskTitle(InputInterface $input, OutputInterface $output)
+    private function resolveNewTaskTitle(InputInterface $input, OutputInterface $output)
     {
         if ($title = $input->getArgument('title')) {
             return $title;
         }
 
-        $question = new Question('Enter task title: ');
+        $question = new Question('Enter new task title: ');
         /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
         do {
