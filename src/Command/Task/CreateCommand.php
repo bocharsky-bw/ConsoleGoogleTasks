@@ -17,7 +17,7 @@ class CreateCommand extends AbstractCommand
             ->setName('task:create')
             ->setDescription('Create task')
             ->setHelp("This command creates user task")
-            ->addArgument('title', InputArgument::OPTIONAL, 'Task list title')
+            ->addArgument('title', InputArgument::OPTIONAL, 'Task title')
             ->addArgument('task-list', InputArgument::OPTIONAL, 'Task list ID')
         ;
     }
@@ -61,17 +61,6 @@ class CreateCommand extends AbstractCommand
         }
 
         return $this->chooseTaskList($input, $output);
-    }
-
-    private function resolveTask(\Google_Service_Tasks_TaskList $taskList, InputInterface $input, OutputInterface $output)
-    {
-        if ($id = $input->getArgument('task')) {
-            // @TODO Query Task object
-            throw new \Exception('Pending...');
-            return $id;
-        }
-
-        return $this->chooseTask($taskList, $input, $output);
     }
 
     private function resolveTaskTitle(InputInterface $input, OutputInterface $output)

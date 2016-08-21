@@ -16,8 +16,8 @@ class ShowCommand extends AbstractCommand
             ->setName('task:show')
             ->setDescription('Show task')
             ->setHelp("This command shows user task")
-            ->addArgument('task-list', InputArgument::OPTIONAL, 'Task list ID')
             ->addArgument('task', InputArgument::OPTIONAL, 'Task ID')
+            ->addArgument('task-list', InputArgument::OPTIONAL, 'Task list ID')
         ;
     }
 

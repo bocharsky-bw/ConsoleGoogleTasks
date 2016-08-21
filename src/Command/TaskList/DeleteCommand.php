@@ -15,8 +15,7 @@ class DeleteCommand extends AbstractCommand
             ->setName('list:delete')
             ->setDescription('Delete task list')
             ->setHelp("This command deletes user task list")
-            // @TODO Use task list title instead of ID
-            ->addArgument('id', InputArgument::OPTIONAL, 'Task list ID')
+            ->addArgument('task-list', InputArgument::OPTIONAL, 'Task list ID')
         ;
     }
 
@@ -50,7 +49,7 @@ class DeleteCommand extends AbstractCommand
 
     private function resolveTaskList(InputInterface $input, OutputInterface $output)
     {
-        if ($id = $input->getArgument('id')) {
+        if ($id = $input->getArgument('task-list')) {
             // @TODO Query TaskList object
             throw new \Exception('Pending...');
             return $id;

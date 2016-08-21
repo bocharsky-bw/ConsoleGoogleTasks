@@ -17,8 +17,8 @@ class RenameCommand extends AbstractCommand
             ->setName('list:rename')
             ->setDescription('Rename task list')
             ->setHelp("This command renames user task list")
-            ->addArgument('id', InputArgument::OPTIONAL, 'Task list ID')
             ->addArgument('title', InputArgument::OPTIONAL, 'New task list title')
+            ->addArgument('task-list', InputArgument::OPTIONAL, 'Task list ID')
         ;
     }
 
@@ -53,7 +53,7 @@ class RenameCommand extends AbstractCommand
 
     private function resolveTaskList(InputInterface $input, OutputInterface $output)
     {
-        if ($id = $input->getArgument('id')) {
+        if ($id = $input->getArgument('task-list')) {
             // @TODO Query TaskList object
             throw new \Exception('Pending...');
             return $id;

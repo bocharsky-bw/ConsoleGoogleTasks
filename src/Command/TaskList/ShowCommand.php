@@ -16,7 +16,7 @@ class ShowCommand extends AbstractCommand
             ->setName('list:show')
             ->setDescription('Show task list')
             ->setHelp("This command shows user task list")
-            ->addArgument('id', InputArgument::OPTIONAL, 'Task list ID')
+            ->addArgument('task-list', InputArgument::OPTIONAL, 'Task list ID')
         ;
     }
 
@@ -37,7 +37,7 @@ class ShowCommand extends AbstractCommand
 
     private function resolveTaskList(InputInterface $input, OutputInterface $output)
     {
-        if ($id = $input->getArgument('id')) {
+        if ($id = $input->getArgument('task-list')) {
             // @TODO Query TaskList object
             throw new \Exception('Pending...');
             return $id;
