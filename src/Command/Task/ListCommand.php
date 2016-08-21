@@ -58,10 +58,8 @@ class ListCommand extends AbstractCommand
 
     private function resolveTaskList(InputInterface $input, OutputInterface $output)
     {
-        if ($taskListId = $input->getArgument('task-list')) {
-            // @TODO Query TaskList object
-            throw new \Exception('Pending...');
-            return $taskListId;
+        if ($id = $input->getArgument('task-list')) {
+            return $this->getTasksGoogleService()->tasklists->get($id);
         }
 
         return $this->chooseTaskList($input, $output);

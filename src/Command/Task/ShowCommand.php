@@ -44,9 +44,7 @@ class ShowCommand extends AbstractCommand
     private function resolveTaskList(InputInterface $input, OutputInterface $output)
     {
         if ($id = $input->getArgument('task-list')) {
-            // @TODO Query TaskList object
-            throw new \Exception('Pending...');
-            return $id;
+            return $this->getTasksGoogleService()->tasklists->get($id);
         }
 
         return $this->chooseTaskList($input, $output);
@@ -55,9 +53,7 @@ class ShowCommand extends AbstractCommand
     private function resolveTask(\Google_Service_Tasks_TaskList $taskList, InputInterface $input, OutputInterface $output)
     {
         if ($id = $input->getArgument('task')) {
-            // @TODO Query Task object
-            throw new \Exception('Pending...');
-            return $id;
+            return $this->getTasksGoogleService()->tasks->get($taskList->getId(), $id);
         }
 
         return $this->chooseTask($taskList, $input, $output);

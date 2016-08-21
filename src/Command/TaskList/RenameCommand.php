@@ -31,7 +31,7 @@ class RenameCommand extends AbstractCommand
         $taskList->setTitle($newTitle);
 
         $service = $this->getTasksGoogleService();
-        $recourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'patch', [
+        $taskListRecourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'patch', [
             "methods" => [
                 "patch" => [
                     "parameters" => [
@@ -46,7 +46,7 @@ class RenameCommand extends AbstractCommand
                 ],
             ],
         ]);
-        $taskList = $recourseService->patch($taskList->getId(), $taskList);
+        $taskList = $taskListRecourseService->patch($taskList->getId(), $taskList);
 
         $output->writeln(sprintf('Task list "%s" is renamed to "%s"', $previousTitle, $taskList->getTitle(), $taskList->getId()));
     }
@@ -54,9 +54,7 @@ class RenameCommand extends AbstractCommand
     private function resolveTaskList(InputInterface $input, OutputInterface $output)
     {
         if ($id = $input->getArgument('task-list')) {
-            // @TODO Query TaskList object
-            throw new \Exception('Pending...');
-            return $id;
+            return $this->getTasksGoogleService()->tasklists->get($id);
         }
 
         return $this->chooseTaskList($input, $output);

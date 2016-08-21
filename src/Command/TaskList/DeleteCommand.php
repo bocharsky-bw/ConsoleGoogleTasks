@@ -25,7 +25,7 @@ class DeleteCommand extends AbstractCommand
         $taskList = $this->resolveTaskList($input, $output);
 
         $service = $this->getTasksGoogleService();
-        $recourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'delete', [
+        $taskListRecourseService = new \Google_Service_Tasks_Resource_Tasklists($service, 'tasks', 'delete', [
             "methods" => [
                 "delete" => [
                     "parameters" => [
@@ -42,7 +42,7 @@ class DeleteCommand extends AbstractCommand
         ]);
 
         // @TODO Add confirmation before actual deleting
-        $recourseService->delete($taskList->getId());
+        $taskListRecourseService->delete($taskList->getId());
 
         $output->writeln(sprintf('Task list "%s" is deleted (%s)', $taskList->getTitle(), $taskList->getId()));
     }
@@ -50,9 +50,7 @@ class DeleteCommand extends AbstractCommand
     private function resolveTaskList(InputInterface $input, OutputInterface $output)
     {
         if ($id = $input->getArgument('task-list')) {
-            // @TODO Query TaskList object
-            throw new \Exception('Pending...');
-            return $id;
+            return $this->getTasksGoogleService()->tasklists->get($id);
         }
 
         return $this->chooseTaskList($input, $output);
