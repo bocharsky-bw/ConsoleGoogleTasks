@@ -36,6 +36,7 @@ $app->setContainer($container);
 $app->addCommands([
     new \AlVi\Command\App\ConfigureCommand(),
     new \AlVi\Command\Task\CreateCommand(),
+    new \AlVi\Command\Task\DeleteCommand(),
     new \AlVi\Command\Task\ListCommand(),
     new \AlVi\Command\Task\RenameCommand(),
     new \AlVi\Command\Task\ShowCommand(),
