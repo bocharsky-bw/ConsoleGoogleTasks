@@ -26,30 +26,9 @@ class DeleteCommand extends AbstractCommand
         $taskList = $this->resolveTaskList($input, $output);
         $task = $this->resolveTask($taskList, $input, $output);
 
-        $service = $this->getTasksGoogleService();
-        $taskRecourseService = new \Google_Service_Tasks_Resource_Tasks($service, 'tasks', 'delete', [
-            "methods" => [
-                "delete" => [
-                    "parameters" => [
-                        'tasklist' => [
-                            'required' => true,
-                            'type' => 'string',
-                            'location' => 'path',
-                        ],
-                        'task' => [
-                            'required' => true,
-                            'type' => 'string',
-                            'location' => 'path',
-                        ],
-                    ],
-                    "path" => "lists/{tasklist}/tasks/{task}",
-                    "httpMethod" => "DELETE",
-                ],
-            ],
-        ]);
-
         // @TODO Add confirmation before actual deleting
-        $taskRecourseService->delete($taskList->getId(), $task->getId());
+        $service = $this->getTasksGoogleService();
+        $service->tasks->delete($taskList->getId(), $task->getId());
 
         $output->writeln(sprintf('Task "%s" is deleted (%s)', $task->getTitle(), $task->getId()));
     }

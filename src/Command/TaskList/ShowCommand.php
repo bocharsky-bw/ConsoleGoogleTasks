@@ -24,6 +24,7 @@ class ShowCommand extends AbstractCommand
     {
         $this->authenticateGoogleClient($input, $output);
         $taskList = $this->resolveTaskList($input, $output);
+
         $updatedAt = new \DateTime($taskList->getUpdated());
 
         $table = new Table($output);

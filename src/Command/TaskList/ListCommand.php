@@ -21,8 +21,8 @@ class ListCommand extends AbstractCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->authenticateGoogleClient($input, $output);
-        $service = $this->getTasksGoogleService();
 
+        $service = $this->getTasksGoogleService();
         $result = $service->tasklists->listTasklists();
         /** @var \Google_Service_Tasks_TaskList[] $taskLists */
         $taskLists = $result->getItems();

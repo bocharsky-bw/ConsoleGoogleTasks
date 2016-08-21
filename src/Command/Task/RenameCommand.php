@@ -28,32 +28,13 @@ class RenameCommand extends AbstractCommand
         $this->authenticateGoogleClient($input, $output);
         $taskList = $this->resolveTaskList($input, $output);
         $task = $this->resolveTask($taskList, $input, $output);
-        $previousTitle = $task->getTitle();
         $newTitle = $this->resolveNewTaskTitle($input, $output);
+
+        $previousTitle = $task->getTitle();
         $task->setTitle($newTitle);
 
         $service = $this->getTasksGoogleService();
-        $taskRecourseService = new \Google_Service_Tasks_Resource_Tasks($service, 'tasks', 'patch', [
-            "methods" => [
-                "patch" => [
-                    "parameters" => [
-                        'tasklist' => [
-                            'required' => true,
-                            'type' => 'string',
-                            'location' => 'path',
-                        ],
-                        'task' => [
-                            'required' => true,
-                            'type' => 'string',
-                            'location' => 'path',
-                        ],
-                    ],
-                    "path" => "lists/{tasklist}/tasks/{task}",
-                    "httpMethod" => "PATCH",
-                ],
-            ],
-        ]);
-        $task = $taskRecourseService->patch($taskList->getId(), $task->getId(), $task);
+        $task = $service->tasks->patch($taskList->getId(), $task->getId(), $task);
 
         $output->writeln(sprintf('Task "%s" is renamed to "%s"', $previousTitle, $task->getTitle(), $task->getId()));
     }
