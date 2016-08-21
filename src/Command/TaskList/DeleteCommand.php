@@ -6,6 +6,7 @@ use AlVi\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class DeleteCommand extends AbstractCommand
 {
@@ -24,7 +25,12 @@ class DeleteCommand extends AbstractCommand
         $this->authenticateGoogleClient($input, $output);
         $taskList = $this->resolveTaskList($input, $output);
 
-        // @TODO Add confirmation before actual deleting
+        $helper = $this->getHelper('question');
+        $question = new ConfirmationQuestion('Are you sure you want to delete task list? Y/N: ', false);
+        if (!$helper->ask($input, $output, $question)) {
+            return;
+        }
+
         $service = $this->getTasksGoogleService();
         $service->tasklists->delete($taskList->getId());
 
