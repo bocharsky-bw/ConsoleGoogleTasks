@@ -6,7 +6,13 @@
  * @link https://developers.google.com/google-apps/tasks/quickstart/php#step_2_install_the_google_client_library
  */
 
-require __DIR__.'/../vendor/autoload.php';
+if (file_exists(__DIR__.'/../vendor/autoload.php')){
+    require __DIR__.'/../vendor/autoload.php';
+} elseif (file_exists(__DIR__.'/../../../autoload.php')) {
+    require __DIR__.'/../../../autoload.php';
+} else {
+    throw new \Exception('Can\'t find Composer autoload file.');
+}
 
 use AlVi\Application;
 use Pimple\Container;
