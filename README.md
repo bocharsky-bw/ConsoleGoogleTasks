@@ -20,10 +20,13 @@ to the next requirements:
 
 ## Installation
 
-The preferred way to install this app is to use [Composer][composer]:
+The preferred way to install this app is to clone it locally and install dependencies
+with [Composer][composer]:
 
 ```bash
-$ composer global require bocharsky-bw/console-google-tasks:dev-master
+$ git clone https://github.com/bocharsky-bw/ConsoleGoogleTasks.git
+$ cd ./ConsoleGoogleTasks/
+$ composer install
 ```
 
 ## Usage
