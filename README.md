@@ -1,7 +1,7 @@
 # ConsoleGoogleTasks
 
 An application for real console geeks which allows to interact with Google Tasks API 
-directly in your terminal and based on the coolest [Symfony Console][console] component.
+directly in your terminal and based on the awesome [Symfony Console][console] component.
 
 ## Table of contents
 
