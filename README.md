@@ -23,7 +23,7 @@ to the next requirements:
 The preferred way to install this app is to use [Composer][composer]:
 
 ```bash
-$ composer global require bocharsky-bw/console-google-tasks
+$ composer global require bocharsky-bw/console-google-tasks:dev-master
 ```
 
 ## Usage
