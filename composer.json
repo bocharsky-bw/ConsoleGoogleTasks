@@ -1,4 +1,13 @@
 {
+    "name": "bocharsky-bw/console-google-tasks",
+    "description": "An application for real console geeks which allows to interact with Google Tasks API directly in your terminal and based on the awesome Symfony Console component",
+    "keywords": ["Google Tasks", "TODO list", "Things to be done", "TBD", "Agenda", "Command line", "Console app", "Terminal app"],
+    "homepage": "https://github.com/bocharsky-bw/ConsoleGoogleTasks",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        { "name": "bocharsky-bw", "email": "bocharsky.bw@gmail.com" }
+    ],
     "autoload": {
         "psr-4": {"AlVi\\": "src/"}
     },
