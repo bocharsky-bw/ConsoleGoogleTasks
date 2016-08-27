@@ -39,7 +39,7 @@ $ composer install
 Start using this console application by calling the next command in your terminal:
 
 ```bash
-bin/console.php # Shows list of available commands
+./bin/console.php # Shows list of available commands
 ```
 
 ### Create a Symlink
