@@ -8,6 +8,11 @@ directly in your terminal and based on the awesome [Symfony Console][console] co
 * [Requirements](#requirements)
 * [Installation](#installation)
 * [Usage](#usage)
+  * [Create a Symlink](#create-a-symlink)
+  * [Short Command Aliases](#short-command-aliases)
+* [Command List](#command-list)
+  * [Task List Commands](#task-list-commands)
+  * [Task Commands](#task-commands)
 * [Contribution](#contribution)
 
 ## Requirements
@@ -16,7 +21,7 @@ To use this application on your local host machine ensure you correspond
 to the next requirements:
 
 * PHP `5.5` or higher
-* Internet Connection to call Google API
+* Internet connection to get access to the Google API
 
 ## Installation
 
@@ -31,11 +36,68 @@ $ composer install
 
 ## Usage
 
-Start using console application with next command:
+Start using this console application by calling the next command in your terminal:
 
 ```bash
-bin/console.php
+bin/console.php # Shows list of available commands
 ```
+
+### Create a Symlink
+
+For the convenience, you can create `console.php` symlink to get a quick access
+to the console application globally in any directory you are at:
+
+```bash
+ln -s /path/to/ConsoleGoogleTasks/bin/console.php /usr/local/bin/todo
+```
+
+Then you can simply get access to the console application globally with:
+
+```bash
+todo # Shows list of available commands
+```
+
+> Use whatever alias you want here for the symlink name instead of `todo` one
+which uses in example.
+
+### Short Command Aliases
+
+Thanks to the Symfony Console, it allows you do not type a full command.
+Just type a short *unique* part of a command starts from the beginning.
+For example, to get list of task lists:
+
+```bash
+todo list:list # Full command name
+# Or just use a shortened command alias 
+todo l:l # This command automatically recognizes by Symfony Console
+```
+
+## Command List
+
+List of available commands.
+
+### Task List Commands
+
+| Command     | Description      |
+| ----------- | ---------------- |
+| list:create | Create task list |
+| list:delete | Delete task list |
+| list:list   | List task lists  |
+| list:rename | Rename task list |
+| list:show   | Show task list   |
+
+### Task Commands
+
+| Command         | Description     |
+| --------------- | --------------- |
+| task:clear      | Clear tasks     |
+| task:complete   | Complete task   |
+| task:create     | Create task     |
+| task:delete     | Delete task     |
+| task:incomplete | Incomplete task |
+| task:list       | List tasks      |
+| task:rename     | Rename task     |
+| task:show       | Show task       |
 
 ## Contribution
 
