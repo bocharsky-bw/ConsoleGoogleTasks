@@ -44,8 +44,8 @@ $ composer global update bocharsky-bw/console-google-tasks
 
 ### With Git
 
-An alternative way to install this app is to clone it locally first and then
-manually install dependencies with [Composer][composer]:
+An alternative way to install this app is to clone it locally first and then manually
+install dependencies with [Composer][composer]:
 
 ```bash
 $ git clone https://github.com/bocharsky-bw/ConsoleGoogleTasks.git
@@ -97,9 +97,9 @@ which uses in example.
 
 ### Short Command Aliases
 
-Thanks to the Symfony Console, it allows you do not type a full command.
-Just type a short *unique* part of a command starts from the beginning.
-For example, to get list of task lists:
+Thanks to the [Symfony Console][console], it allows you do not type a full command.
+Just type a short *unique* part of a command starts from the beginning. For example,
+to get list of task lists:
 
 ```bash
 $ todo list:list # Full command name
