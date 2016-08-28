@@ -59,7 +59,7 @@ You still can manually update it with Git by pulling latest changes from the `ma
 branch of source repository:
 
 ```bash
-git pull origin master
+$ git pull origin master
 ```
 
 Also don't forget to update dependencies with [Composer][composer] by calling
@@ -74,7 +74,7 @@ $ composer update
 Start using this console application by calling the next command in your terminal:
 
 ```bash
-./bin/console.php # Shows list of available commands
+$ ./bin/console.php # Shows list of available commands
 ```
 
 ### Create a Symlink
@@ -83,13 +83,13 @@ For the convenience, you can create `console.php` symlink to get a quick access
 to the console application globally in any directory you are at:
 
 ```bash
-ln -s /path/to/ConsoleGoogleTasks/bin/console.php /usr/local/bin/todo
+$ ln -s /path/to/ConsoleGoogleTasks/bin/console.php /usr/local/bin/todo
 ```
 
 Then you can simply get access to the console application globally with:
 
 ```bash
-todo # Shows list of available commands
+$ todo # Shows list of available commands
 ```
 
 > Use whatever alias you want here for the symlink name instead of `todo` one
@@ -102,9 +102,9 @@ Just type a short *unique* part of a command starts from the beginning.
 For example, to get list of task lists:
 
 ```bash
-todo list:list # Full command name
+$ todo list:list # Full command name
 # Or just use a shortened command alias 
-todo l:l # This command automatically recognizes by Symfony Console
+$ todo l:l # This command automatically recognizes by Symfony Console
 ```
 
 ## Command List
