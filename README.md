@@ -25,13 +25,48 @@ to the next requirements:
 
 ## Installation
 
-The preferred way to install this app is to clone it locally and install dependencies
-with [Composer][composer]:
+### With Composer
+
+The preferred way to install this app is to use [Composer][composer]. The next
+command installs this project [globally][composer_global] on your local machine:
+
+```bash
+$ composer global install bocharsky-bw/console-google-tasks
+```
+
+#### Update
+
+[Composer][composer] helps you to easily update it to the latest version:
+
+```bash
+$ composer global update bocharsky-bw/console-google-tasks
+```
+
+### With Git
+
+An alternative way to install this app is to clone it locally first and then
+manually install dependencies with [Composer][composer]:
 
 ```bash
 $ git clone https://github.com/bocharsky-bw/ConsoleGoogleTasks.git
 $ cd ./ConsoleGoogleTasks/
 $ composer install
+```
+
+#### Update
+
+You still can manually update it with Git by pulling latest changes from the `master`
+branch of source repository:
+
+```bash
+git pull origin master
+```
+
+Also don't forget to update dependencies with [Composer][composer] by calling
+the next command in the project folder:
+
+```bash
+$ composer update
 ```
 
 ## Usage
@@ -113,5 +148,6 @@ and discuss it first.
 [issues]: https://github.com/bocharsky-bw/ConsoleGoogleTasks/issues
 [pulls]: https://github.com/bocharsky-bw/ConsoleGoogleTasks/pulls
 [composer]: https://getcomposer.org/
+[composer_global]: https://getcomposer.org/doc/03-cli.md#global
 [console]: https://symfony.com/doc/current/components/console.html
 [google_tasks]: https://mail.google.com/tasks/canvas
